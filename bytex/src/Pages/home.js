@@ -40,19 +40,38 @@ addUser = () => {
 
     .catch(err=>console.log(`${err} - Probleme cu conexiunea dvoastra`))
 }
+handdleClickRemove = (event) =>{
+  this.setState(prevState => ({
+    gitUsersDetails: prevState.gitUsersDetails.filter((x,index) => index != event.key),
+    gitUsers: prevState.gitUsers.filter((x,index) => index != event.key)
+  }))
+}
 
 handdleClickRepo = () =>{
   let max = 0;
-  this.state.gitUsersDetails.forEach( (x) => { 
+  this.state.gitUsersDetails.forEach( x => { 
+    if(x.public_repos == max){
+      this.setState(prevState => ({
+        victory : `Egalitate intre : ${prevState.victory} si ${x.login}`
+      }))}
+    
     if (x.public_repos > max){
       max = x.public_repos;
       this.setState({
-        victory : x.login.toLowerCase()
+        victory : x.login
       })
+      
     }
-   }
-  )
+
+   })
+  if(max == 0){
+    this.setState({
+      victory : 'Nu a castigat nimeni, toti userii au 0 repos!'
+    })
+  }
+  
 }
+
 
 render() {
   return (
@@ -64,7 +83,7 @@ render() {
       <button className = 'button' onClick= {this.addUser}>Add</button>
       
       <ul>
-      {this.state.gitUsers.map((x,index)=> <li key={index}>{x}</li>)}
+      {this.state.gitUsers.map((x,index)=> <li key={index}>{x}<button className ='buttonRemove' onClick={this.handdleClickRemove} key={index}>Remove</button></li>)}
       </ul>
       {console.log(this.state.gitUsersDetails)}
       <div className='battle'>

@@ -64,3 +64,10 @@ flex-direction: column;
   margin-bottom: 15px;
   width: 50px;
 }
+.buttonRemove {
+  background-color: red;
+  color: black;
+  border-radius: 10px;
+  margin-bottom: 15px;
+  width: 100px;
+}
