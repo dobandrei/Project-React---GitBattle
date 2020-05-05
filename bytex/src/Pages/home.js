@@ -19,7 +19,7 @@ callBackFunction = (childData) => {
 }
 
 render() {
-  
+  console.log('RenderPARENT',this.state.gitUsers.length)
   return (
     <div className = 'home'>
       <h1>Home</h1>
@@ -27,7 +27,6 @@ render() {
           <AddRemoveUser parentCallBack = {this.callBackFunction}/>
       
       <div className='battle'>
-        
           <RepoBattle data = {this.state}/>
           <LocationBattle data = {this.state.gitUsers}/>
           {//<FollowersBattle/>

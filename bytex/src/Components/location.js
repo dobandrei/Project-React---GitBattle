@@ -47,8 +47,9 @@ class LocationBattle extends Component {
         let key = 'bb878a0c5d444082a393bb575f80a34f';
         let minimDistance = 0;
         let result ='';
-        
+        let name = '';
         this.props.data.forEach(user => {
+            if (user.location != null) {
             fetch(`https://api.opencagedata.com/geocode/v1/json?q=${user.location.includes(',') ? user.location.slice(0,user.location.indexOf(',')) : user.location}&key=${key}`)
             .then (res => res.json())
             .then (data => {
@@ -59,29 +60,29 @@ class LocationBattle extends Component {
                 if (userDistance < minimDistance || minimDistance == 0) {
                     minimDistance = userDistance;
                     result = user.login;
+                    name = user.name;
                 }
 
                 if (userDistance == minimDistance) {
                     result = user.login;
+                    name = user.name;
                 }
-               
-               this.setState({
-                victory: `${result} la o distanta de aproximativ ${minimDistance} km`,
-                })
+               console.log(user.login,user.name,userDistance)
 
+               this.setState({
+                victory: `User-ul ${result} ${(name != null) ? `- ${name}` : '(noName)'} este cel mai aproape, la doar ${minimDistance} km`,
+                })
                 }
             )
-            .catch(err => console.log(err))   
-             
-                    
-
-                })
-    
+            .catch(err => console.log(err))         
+        }
+    })
 }
     
     
 
      render(){
+         
         return (
             <div className='location'>
                 <button className = 'button' onClick = {this.handdleClick}>Battle</button> Who is closer to you ? ==>

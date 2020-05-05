@@ -5,8 +5,7 @@ class RepoBattle extends Component {
     constructor (props) {
         super(props)
         this.state = {
-          victory: null,
-          updated: this.props.data.updated
+          victory: null
         }
       }
 
@@ -14,14 +13,14 @@ class RepoBattle extends Component {
         let max = 0;
         let result = '';
 
-        this.props.data.gitUsers.forEach( x => { 
-          if(x.public_repos == max){
-            result = `Egalitate intre: ${result.slice(24)} si ${x.login.toLowerCase()}`
+        this.props.data.gitUsers.forEach( user => { 
+          if(user.public_repos == max){
+            result = `Egalitate intre: ${result.slice(24)} si ${user.login.toLowerCase()}`
             }
         
-          if (x.public_repos > max){
-            max = x.public_repos;
-            result =  `Castigator este userul: ${x.login.toLowerCase()}`
+          if (user.public_repos > max){
+            max = user.public_repos;
+            result =  `Castigator este userul: ${user.login.toLowerCase()}(${user.name})`
           }
          })
 
