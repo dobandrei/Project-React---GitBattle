@@ -1,102 +1,42 @@
 import React, { Component } from 'react';
+import RepoBattle from '../Components/repo'
+import LocationBattle from '../Components/location'
+import AddRemoveUser from '../Components/addUser'
 
 class Home extends Component {
-  constructor(props){
-    super(props)
-    this.state = {
-      user: '',
-      gitUsers : [],
-      gitUsersDetails:[],
-      victory: null
-    }
-  }
-
-  updateUser = (event) => {
-    const value = event.target.value;
-    this.setState({
-        user : value,
-        
-    })
-}
-
-addUser = () => {
-  fetch (`https://api.github.com/users/${this.state.user}`)
-    .then(res => res.json())
-    .then(data => {
-      if (data.message != "Not Found"){
-      this.setState(prevState => ({
-              gitUsers : prevState.gitUsers.concat(this.state.user),
-              user : '',
-              victory: null,
-              gitUsersDetails: prevState.gitUsersDetails.concat(data)
-      }))
-    } else {
-      alert('UserName not found!')
-      this.setState({
-      user : ''
-      })
-    }
-  })
-
-    .catch(err=>console.log(`${err} - Probleme cu conexiunea dvoastra`))
-}
-handdleClickRemove = (event) =>{
-  this.setState(prevState => ({
-    gitUsersDetails: prevState.gitUsersDetails.filter((x,index) => index != event.key),
-    gitUsers: prevState.gitUsers.filter((x,index) => index != event.key)
-  }))
-}
-
-handdleClickRepo = () =>{
-  let max = 0;
-  this.state.gitUsersDetails.forEach( x => { 
-    if(x.public_repos == max){
-      this.setState(prevState => ({
-        victory : `Egalitate intre : ${prevState.victory} si ${x.login}`
-      }))}
+  constructor(){
     
-    if (x.public_repos > max){
-      max = x.public_repos;
-      this.setState({
-        victory : x.login
-      })
-      
+    super()
+    this.state = {
+      gitUsers: []
     }
-
-   })
-  if(max == 0){
-    this.setState({
-      victory : 'Nu a castigat nimeni, toti userii au 0 repos!'
-    })
   }
-  
-}
 
+callBackFunction = (childData) => {     
+  return this.setState({
+    gitUsers: childData
+  })
+}
 
 render() {
+  
   return (
     <div className = 'home'>
       <h1>Home</h1>
-      <p>Introduceti userii GitHub pentru a putea fi comparati:</p>
-      <input className ='input' value = {this.state.user} onChange = {this.updateUser}/> 
-                        
-      <button className = 'button' onClick= {this.addUser}>Add</button>
       
-      <ul>
-      {this.state.gitUsers.map((x,index)=> <li key={index}>{x}<button className ='buttonRemove' onClick={this.handdleClickRemove} key={index}>Remove</button></li>)}
-      </ul>
-      {console.log(this.state.gitUsersDetails)}
+          <AddRemoveUser parentCallBack = {this.callBackFunction}/>
+      
       <div className='battle'>
-          <button className = 'button' onClick = {this.handdleClickRepo}>Battle</button> Who has more public repositories ?
-            <p className='repo'> {(this.state.victory != null) && this.state.victory}</p>
-          <button className = 'button'>Battle</button> Who is closer to my location ?
-            <p className='location'></p>
-          <button className = 'button'>Battle</button> Who has the most fallowers ?
-            <p className='fallowers'></p>
-          <button className = 'button'>Battle</button>  Who has the oldest account ?
-            <p className='oldest'></p>
-          <button className = 'button'>Battle</button> Who updated last ?
-            <p className='update'></p>
+        
+          <RepoBattle data = {this.state}/>
+          <LocationBattle data = {this.state.gitUsers}/>
+          {//<FollowersBattle/>
+          }
+          {//<OldesAccountBattle/>
+          }
+          {//<LastUpdateBattle/>
+          }
+          
       </div>
 
       </div>
