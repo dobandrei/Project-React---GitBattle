@@ -8,13 +8,15 @@ class Home extends Component {
     
     super()
     this.state = {
-      gitUsers: []
+      gitUsers: [],
+      victory: null
     }
   }
 
 callBackFunction = (childData) => {     
   return this.setState({
     gitUsers: childData
+    
   })
 }
 
@@ -27,7 +29,7 @@ render() {
           <AddRemoveUser parentCallBack = {this.callBackFunction}/>
       
       <div className='battle'>
-          <RepoBattle data = {this.state}/>
+          <RepoBattle data = {this.state.gitUsers}/>
           <LocationBattle data = {this.state.gitUsers}/>
           {//<FollowersBattle/>
           }
@@ -37,7 +39,7 @@ render() {
           }
           
       </div>
-
+ 
       </div>
   );
 }

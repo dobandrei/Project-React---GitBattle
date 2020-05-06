@@ -59,13 +59,8 @@ handdleClickRemove = (e) =>{
 
 sendData = () => this.props.parentCallBack(this.state.gitUsers)
 
-componentDidUpdate(){
-    console.log('updateChild',this.state.gitUsers.length)
-    
-}
+
 render() {
-    
-    console.log('renderChild',this.state.gitUsers)
     return (
       <div className = 'addUser'>
           
@@ -75,10 +70,10 @@ render() {
      
         <ul>
             {this.state.gitUsers.map((user,index)=> 
-            <li key={index}>
-                {`${user.login.toLowerCase()} ${(user.name != null) ? `- ${user.name}` : '(noName)'}`}
-                <button id={index} className ='buttonRemove' onClick={this.handdleClickRemove} >Remove</button>
-            </li>)}
+              <li key={index}>
+                  {(user.name != null) ? `"${user.login.toLowerCase()} - ${user.name}"` : '(noName)'}
+                  <button id={index} className ='buttonRemove' onClick={this.handdleClickRemove} >Remove</button>
+              </li>)}
         </ul>
         
     

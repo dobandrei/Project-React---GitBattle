@@ -10,26 +10,29 @@ class RepoBattle extends Component {
       }
 
     handdleClick = () =>{
-        let max = 0;
+        let maxRepo = 0;
         let result = '';
+        let arrayOfUsersLength = this.props.data.length;
 
-        this.props.data.gitUsers.forEach( user => { 
-          if(user.public_repos == max){
-            result = `Egalitate intre: ${result.slice(24)} si ${user.login.toLowerCase()}`
-            }
-        
-          if (user.public_repos > max){
-            max = user.public_repos;
-            result =  `Castigator este userul: ${user.login.toLowerCase()}(${user.name})`
+        this.props.data.forEach( user => { 
+          let userName = (user.name != null) ? `"${user.login.toLowerCase()} - ${user.name}"` : '(noName)';
+          let publicRepo = user.public_repos;
+
+          if(publicRepo == maxRepo){
+            result = `Egalitate intre userii: ${result.slice(0,result.length-1).slice(24)} si ${userName}.`
+          }
+          if (publicRepo > maxRepo){
+            maxRepo = publicRepo;
+            result =  `Castigator este userul: ${userName}.`
           }
          })
 
-         if(max == 0 && this.props.data.gitUsers.length != 0){
-          result = 'Nu a castigat nimeni, toti userii au 0 repos!';
+         if(maxRepo == 0 &&  arrayOfUsersLength != 0){
+            result = 'Nu a castigat nimeni, toti userii au 0 repos!';
         }
 
-        if(this.props.data.gitUsers.length <= 1){
-          result =  'Adaugati cel putin 2 useri pentru a putea face comparatie'
+        if(arrayOfUsersLength <= 1){
+            result =  'Adaugati cel putin 2 useri pentru a putea face comparatie'
         }
 
         this.setState({
@@ -40,10 +43,8 @@ class RepoBattle extends Component {
      render(){
         return (
             <div className='repo'>
-             
                 <button className = 'button' onClick = {this.handdleClick}>Battle</button> Who has more public repositories ? ==>
                 <span> {(this.state.victory != null) && this.state.victory}</span>
-
             </div>
         );
     }

@@ -5,8 +5,8 @@ class LocationBattle extends Component {
         super()
         this.state = {
             victory : null,
-            lat1 : 0,
-            lng1 : 0
+            lat : 0,
+            lng : 0
         }
     }
     
@@ -14,8 +14,8 @@ class LocationBattle extends Component {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(position => {
              this.setState({       
-            lat1 : position.coords.latitude,
-            lng1 : position.coords.longitude
+            lat : position.coords.latitude,
+            lng : position.coords.longitude
         })
       }
     )
@@ -44,50 +44,44 @@ class LocationBattle extends Component {
      
 
     handdleClick= () =>{
-        let key = 'bb878a0c5d444082a393bb575f80a34f';
+        const key = 'bb878a0c5d444082a393bb575f80a34f';
         let minimDistance = 0;
         let result ='';
         let name = '';
+
         this.props.data.forEach(user => {
             if (user.location != null) {
-            fetch(`https://api.opencagedata.com/geocode/v1/json?q=${user.location.includes(',') ? user.location.slice(0,user.location.indexOf(',')) : user.location}&key=${key}`)
+            let userLocation = user.location.includes(',') ? user.location.slice(0,user.location.indexOf(',')) : user.location;
+            let userName = (user.name != null) ? `"${user.login.toLowerCase()} - ${user.name}"` : '(noName)';
+            fetch(`https://api.opencagedata.com/geocode/v1/json?q=${userLocation}&key=${key}`)
             .then (res => res.json())
             .then (data => {
                 let coord = data.results[0].geometry;
                 
-                let userDistance = this.distance(this.state.lat1,this.state.lng1,coord.lat,coord.lng);
+                let userDistance = this.distance(this.state.lat,this.state.lng,coord.lat,coord.lng);
 
                 if (userDistance < minimDistance || minimDistance == 0) {
                     minimDistance = userDistance;
-                    result = user.login;
-                    name = user.name;
+                    result = userName;
                 }
 
                 if (userDistance == minimDistance) {
-                    result = user.login;
-                    name = user.name;
+                    result = userName;
                 }
-               console.log(user.login,user.name,userDistance)
 
                this.setState({
-                victory: `User-ul ${result} ${(name != null) ? `- ${name}` : '(noName)'} este cel mai aproape, la doar ${minimDistance} km`,
+                victory: `User-ul ${result} este cel mai aproape, la doar ${minimDistance} km`,
                 })
-                }
-            )
+            })
             .catch(err => console.log(err))         
         }
     })
 }
-    
-    
-
      render(){
-         
         return (
             <div className='location'>
                 <button className = 'button' onClick = {this.handdleClick}>Battle</button> Who is closer to you ? ==>
-                <p> {(this.state.victory != null) && this.state.victory}</p>
-
+                <p>{(this.state.victory != null) && this.state.victory}</p>
             </div>
         )
     }
