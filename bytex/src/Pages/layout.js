@@ -16,48 +16,47 @@ class Layout extends Component {
     constructor (props){
         super(props)
     }
-
-render() {
-  return (
-    <div className='container'>
-        <div>
-            <Header />
+    render() {
+    return (
+        <div className='container'>
+            <div>
+                <Header />
+            </div>
+            
+            <div className='main'>
+                <Router>
+                    <div className = 'routerContent'>
+                        <Link to='/'>Home</Link>
+                        <Link to='/about'>About</Link>
+                        <Link to='/register'>Register</Link>
+                        <Link to='/logIn'>Log in</Link>
+                    </div>
+                    
+                    <div className='mainContent'>
+                        <Switch>
+                            <Route exact path='/'>
+                                <Home />
+                            </Route>
+                            <Route path='/about'>
+                                <About />
+                            </Route>
+                            <Route path='/logIn'>
+                                <LogIn />
+                            </Route>
+                            <Route path='/register'>
+                                <Register />
+                            </Route>
+                        </Switch>
+                    </div>    
+                </Router> 
+            </div>
+            
+            <div>
+                <Footer />
+            </div>
         </div>
-        
-        <div className='main'>
-            <Router>
-                <div className = 'routerContent'>
-                    <Link to='/'>Home</Link>
-                    <Link to='/about'>About</Link>
-                    <Link to='/register'>Register</Link>
-                    <Link to='/logIn'>Log in</Link>
-                </div>
-
-                <div className='mainContent'>
-                    <Switch>
-                        <Route exact path='/'>
-                            <Home />
-                        </Route>
-                        <Route path='/about'>
-                            <About />
-                        </Route>
-                        <Route path='/logIn'>
-                            <LogIn />
-                        </Route>
-                        <Route path='/register'>
-                            <Register />
-                        </Route>
-                    </Switch>
-                </div>    
-            </Router> 
-        </div>
-        
-        <div className='footer'>
-            <Footer />
-        </div>
-    </div>
-  );
- }
+    );
+  }
 }
 
 export default Layout;
