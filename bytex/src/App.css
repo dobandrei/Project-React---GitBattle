@@ -4,15 +4,14 @@
   text-align: center;
   display:flex;
   justify-content: center;
-  margin: auto;
+  margin: 0;
+  padding: 0;
   
 }
 
 .home {
   display: flex;
   flex-direction: column;
-  width: 80%;
-  border: 2px solid #f0f0f0;
   padding: 20px 0;
   font-size: 16px;
 }
@@ -22,30 +21,28 @@
   background-image: url('./Images/gitbattle-header.png');
   background-size: contain;
   background-repeat: no-repeat;
-  height: 54px;
+  height: 60px;
 }
 
 .container {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  width:55%;
+  width:60%;
   background-color: rgb(219, 243, 253);
   
 }
 
-.main {
+.mainContainer {
   flex: 1;
-  display: flex;
-  
+  display:flex;
 }
 
 .mainContent{
   text-align: start;
   padding: 50px 100px ;
-  width :100%;
+  width :70%;
   display:flex;
-  justify-content: center;
 }
 
 .routerContent {
@@ -54,12 +51,23 @@
   align-items: start;
   padding: 15px;
   padding-top: 50px;
-  
   border-right: 1px dotted grey;
-  background-color: rgb(189, 228, 245)
-  
+  background-color: rgb(189, 228, 245);
+  width: 80px; 
+}
+
+.routerContent span {
+  color: black;
+  transition: 0.5s;
+  font-size: 15px;
   }
-  
+
+.routerContent span:hover {
+  color: red;
+  transition: 0.3s;
+  font-size: 20px;
+
+    }
 
 .footer {
   background-image: url('./Images/gitbattle-footer.png');
@@ -86,28 +94,99 @@
 }
 
 .input {
-  width: 75%;
+  width: 310px;
   height: 5px;
-  border-radius: 10px;
-  border: 2px solid #f0f0f0;
+  border: 2px solid #161d7a;
   padding: 20px 0;
   font-size: 16px;
+  margin-bottom: 30px;
 }
 
 .buttonBattle {
   background-color: black;
   color: wheat;
-  border-radius: 10px;
+  border-radius: 50%;
   margin-bottom: 15px;
   width: 50px;
+  height: 50px;
+  
+}
+.buttonAdd {
+  background-color: #161d7a;
+  color: wheat;
+  border-radius: 50%;
+  margin-bottom: 15px;
+  width: 50px;
+  height: 50px;
+  margin-left: 35px;
 }
 
 .buttonRemove {
-  background-color: red;
+  background-color: rgb(245, 101, 101);
   color: black;
   border-radius: 10px;
-  margin-bottom: 15px;
+  
   width: 100px;
 }
+
+.displayUser {
+  display: grid;
+  grid-gap: 50px;
+  grid-template-columns: 1fr 1fr 1fr;
+  margin-top: 25px;
+}
+
+.gridItem {
+  display: flex;
+  grid-column-start: auto;
+  flex-direction: column;
+  align-content: center;
+  align-items: center;
+  width: 250px;
+  height: 250px;
+  background-color: white;
+  border-radius: 25%;
+}
+
+.gridItem div{
+  width: 150px;
+  height: 70px;
+  text-align: center;
+  margin-bottom: 0px;
+}
+
+.gridItem p{
+  margin: 0px;
+  margin-bottom: 10px;
+}
+
+.gridItem img{
+  border-radius: 50%;
+  width: 120px;
+}
+
+
+.winner {
+position: relative;
+display: flex;
+flex-direction: row-reverse;
+justify-content: space-between;
+width: 95%;
+background-color: white;
+border-radius: 15px;
+}
+
+.winner img{
+  width: 60px;
+  border-radius: 50%; 
+}
+
+.winner div{
+ display:flex;
+ flex-direction: row;
+}
+
+
+
 
 

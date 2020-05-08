@@ -11,25 +11,47 @@ import Home from '../Pages/home'
 import About from '../Pages/about'
 import LogIn from '../Pages/logIn'
 import Register from '../Pages/register'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faHome } from '@fortawesome/free-solid-svg-icons'
+import { faEye } from '@fortawesome/free-solid-svg-icons'
+import { faRegistered } from '@fortawesome/free-solid-svg-icons'
+import { faFeather } from '@fortawesome/free-solid-svg-icons'
 
 class Layout extends Component {
     constructor (props){
         super(props)
     }
     render() {
+     
     return (
         <div className='container'>
             <div>
                 <Header />
+                
             </div>
             
-            <div className='main'>
+            <aside className='mainContainer'>
                 <Router>
                     <div className = 'routerContent'>
-                        <Link to='/'>Home</Link>
-                        <Link to='/about'>About</Link>
-                        <Link to='/register'>Register</Link>
-                        <Link to='/logIn'>Log in</Link>
+                        <Link to='/'>
+                            <FontAwesomeIcon icon={faHome} color='black'/>
+                            <span>Home</span>
+                        </Link>
+
+                        <Link to='/about'>
+                            <FontAwesomeIcon icon={faEye} color='black'/>
+                            <span>About</span>
+                        </Link>
+
+                        <Link to='/register'>
+                            <FontAwesomeIcon icon={faRegistered} color='black'/>
+                            <span>Register</span>
+                        </Link>
+
+                        <Link to='/logIn'>
+                            <FontAwesomeIcon icon={faFeather} color='black'/>
+                            <span>Log in</span>
+                        </Link>
                     </div>
                     
                     <div className='mainContent'>
@@ -49,7 +71,7 @@ class Layout extends Component {
                         </Switch>
                     </div>    
                 </Router> 
-            </div>
+            </aside>
             
             <div>
                 <Footer />

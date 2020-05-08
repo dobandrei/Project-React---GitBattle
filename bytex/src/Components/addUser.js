@@ -14,10 +14,12 @@ class AddRemoveUser extends Component {
     }
   }
 
+
   updateInput = (e) => {
     const value = e.target.value;
     this.setState({
-      input: value 
+      input: value ,
+      gitUsers: this.props.data
     })
   }
 
@@ -50,19 +52,10 @@ class AddRemoveUser extends Component {
       .catch(err=>console.log(`${err} - Probleme cu conexiunea dvoastra`))
   }
 
-  handdleClickRemove = (e) =>{ 
-    let element = e.target.id;
-    this.setState(prevState => ({
-      gitUsers: prevState.gitUsers.filter((x,index) => index != element),
-        })
-    ) 
-  this.sendData();
-  }
-
   sendData = () => this.props.parentCallBack(this.state.gitUsers)
 
   render() {
-    console.log(this.state.gitUsers)
+    console.log('addUser',this.state.gitUsers.length)
     return (
     <div className = 'containerAddRemove'>
         <div className = 'addUser'> 
@@ -79,22 +72,12 @@ class AddRemoveUser extends Component {
             </button>
         </div>
 
-        <div className = 'removeUser'>
-          <ul>
-            {this.state.gitUsers.map((user,index)=> 
-              <li key={index}>
-                  {(user.name != null) ? `${user.login.toLowerCase()} - ${user.name}` : '(noName)'}
-                  <button id={index} className ='buttonRemove' onClick={this.handdleClickRemove} >Remove</button>
-              </li>)}
-          </ul>
-        </div>
-
         <div className='battle'>
-          <LocationBattle data = {this.state.gitUsers}/>
-          <RepoBattle data = {this.state.gitUsers}/>
-          <FollowersBattle data = {this.state.gitUsers}/>
-          <OldesAccountBattle data = {this.state.gitUsers}/>
-          <LastUpdateBattle data = {this.state.gitUsers}/>
+          <LocationBattle data = {this.props.data}/>
+          <RepoBattle data = {this.props.data}/>
+          <FollowersBattle data = {this.props.data}/>
+          <OldesAccountBattle data = {this.props.data}/>
+          <LastUpdateBattle data = {this.props.data}/>
         </div>
     </div>
     );

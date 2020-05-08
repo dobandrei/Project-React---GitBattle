@@ -5,7 +5,9 @@ class FollowersBattle extends Component {
     constructor (props) {
         super(props)
         this.state = {
-          victory: null
+          victory: null,
+          avatar : [],
+          name : ''
         }
     }
 
@@ -17,16 +19,19 @@ class FollowersBattle extends Component {
          } 
         let maxFollowers = 0;
         let result = '';
+        let photo = [];
 
         this.props.data.forEach( user => { 
-          let userName = (user.name != null) ? `"${user.login.toLowerCase()} - ${user.name}"` : '"(noName)"';
+          let userName = `"${user.login.toLowerCase()}"`;
           let followers = user.followers;
             if(followers == maxFollowers){
-              result = `It's a tie: ${result.slice(0,result.length-1).slice(14)} si ${userName}.`
+              result = `${result} and ${userName}`;
+              photo.push(user.avatar_url);
             }
             if (followers > maxFollowers){
               maxFollowers = followers;
-              result =  `The winner is: ${userName} with ${followers} followers.`
+              result =  userName;
+              photo = [user.avatar_url];
             }
         })
 
@@ -34,17 +39,28 @@ class FollowersBattle extends Component {
               result = 'Nobody won, all GitHub users have 0 followers!';
             }
           this.setState({
-            victory: result
+            victory: `Victory for: ${result} with ${maxFollowers} reporitories.`,
+            name: result,
+            avatar: photo
           })
     } 
     render(){
       return (
-        <div className='folowers'>
+        <div className='winnerContainer'>
           <button className = 'buttonBattle' onClick = {this.handdleClick}>Battle</button> 
-            <span>Who has the most followers ? 
-           {(this.state.victory != null) && this.state.victory}</span>
+            <span>Who has the most followers ?</span>
+            <div className ='winner'>
+                    <div className='winnerImg'>
+                        {this.state.avatar.map((user, index) => 
+                          <img src = {user} alt='userPhoto' key = {index}/>
+                          )}   
+                    </div>  
+                    <div>
+                        {(this.state.victory != null) && this.state.victory}
+                    </div>  
+                </div>
         </div>
-      );
+      )
     }
 }
 

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './register.css'
 
+
 class Register extends Component {
   constructor(){
     super()
@@ -62,7 +63,7 @@ class Register extends Component {
             <div className="formInput">
                 <label>Confirm Password</label>
                 <input 
-                  name ="password2" 
+                  name ="pass2" 
                   type="password" 
                   placeholder="  Enter password again"
                   onChange = {this.handdleChange}

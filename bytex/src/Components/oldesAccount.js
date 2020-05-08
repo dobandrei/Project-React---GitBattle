@@ -4,7 +4,9 @@ class OldesAccountBattle extends Component {
     constructor (props) {
         super(props)
         this.state = {
-          victory: null
+          victory: null,
+          avatar : '',
+          name : ''
         }
     }
 
@@ -39,27 +41,37 @@ class OldesAccountBattle extends Component {
         }
         let oldestDate = new Date();
         let result = '';
-
+        let photo = '';
         this.props.data.forEach( user => { 
-          let userName = (user.name != null) ? `"${user.login.toLowerCase()} - ${user.name}"` : '"(noName)"';
+          let userName = `"${user.login.toLowerCase()}"`;
           let userCreateDate = new Date(user.created_at);
             if (userCreateDate < oldestDate){
                 oldestDate = userCreateDate;
                 let day = oldestDate.getDate();
                 let dayDate = (day in days) ? days[day]:(`${day}th`);
                 result =  `The winner is: ${userName}, he created his account on the ${dayDate} of ${months[oldestDate.getMonth()]} ${oldestDate.getFullYear()}.`
-            }
+                photo = user.avatar_url;
+              }
           })       
           this.setState({
-            victory: result
+            victory: result,
+            name: result,
+            avatar: photo != null && photo,
           })
     } 
     render(){
       return (
-        <div className='oldest'>
+        <div className='winnerContainer'>
           <button className = 'buttonBattle' onClick = {this.handdleClick}>Battle</button> 
-            <span>Who has the oldest account ? ==>{(this.state.victory != null) && this.state.victory}</span>
-        </div>
+            <span>Who has the oldest account ? 
+            </span>
+                <div className ='winner'>
+                        <img src={this.state.avatar} alt={this.state.name}/>
+                    <div>
+                        {(this.state.victory != null) && this.state.victory}
+                    </div>  
+                </div>
+            </div>
       );
     }
 }
