@@ -14,6 +14,7 @@
   flex-direction: column;
   padding: 20px 0;
   font-size: 16px;
+  width: 950px;
 }
 
 
@@ -32,7 +33,16 @@
   background-color: rgb(219, 243, 253);
   
 }
-
+h1 {
+  text-align: center;
+  margin-right: 70px;
+}
+.about{
+  width:70%
+}
+.about ul{
+  margin-left: 110px;
+}
 .mainContainer {
   flex: 1;
   display:flex;
@@ -41,8 +51,22 @@
 .mainContent{
   text-align: start;
   padding: 50px 100px ;
-  width :70%;
+  width :71%;
   display:flex;
+  justify-content: center;
+}
+.containerAddRemove {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  align-items: center;
+  
+}
+.containerBattle{
+  width: 500px;
+}
+.addUser {
+  margin-right: 80px;
 }
 
 .routerContent {
@@ -54,6 +78,9 @@
   border-right: 1px dotted grey;
   background-color: rgb(189, 228, 245);
   width: 90px; 
+}
+.routerContent div{
+  margin-bottom: 25px;
 }
 
 .routerContent span {
@@ -171,7 +198,6 @@ position: relative;
 display: flex;
 flex-direction: row-reverse;
 justify-content: space-between;
-width: 95%;
 background-color: white;
 border-radius: 15px;
 }

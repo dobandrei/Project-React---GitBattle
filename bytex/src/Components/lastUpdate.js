@@ -5,7 +5,7 @@ class LastUpdateBattle extends Component {
         super(props)
         this.state = {
           victory: null,
-          avatar : '',
+          avatar : [],
           name : ''
         }
     }
@@ -42,14 +42,14 @@ class LastUpdateBattle extends Component {
         let presentDate = new Date();
         let lastUpdate = 0;
         let result = '';
-        let photo = '';
+        let photo = [];
         this.props.data.forEach( user => { 
           let userName = `"${user.login.toLowerCase()}"`;
           let userUpdateDate = new Date(user.updated_at);
             if (presentDate - userUpdateDate < lastUpdate || lastUpdate == 0){
                 lastUpdate = userUpdateDate;
                 result =  userName;
-                photo = user.avatar_url;
+                photo = [user.avatar_url];
             }
         })   
           
@@ -58,7 +58,7 @@ class LastUpdateBattle extends Component {
           let fullDate = `${dayDate} of ${months[lastUpdate.getMonth()]} ${lastUpdate.getFullYear()}`;
           let fullTime =  lastUpdate.toString().slice(16,24);
                 this.setState({
-                    victory: `The winner is: ${result}, last updated on the ${fullDate} ${fullTime}.`,
+                    victory: `The winner is: ${result}, last updated on the ${fullDate} at ${fullTime}.`,
                     name: result,
                     avatar: photo
                 })    
@@ -69,7 +69,11 @@ class LastUpdateBattle extends Component {
           <button className = 'buttonBattle' onClick = {this.handdleClick}>Battle</button> 
             <span>Who updated their account last?</span>
             <div className ='winner'>
-                        <img src={this.state.avatar} alt={this.state.name}/>
+                    <div>
+                      {this.state.avatar.map((photoLink, index) => 
+                        <img src = {photoLink} alt='userPhoto' key = {index}/>
+                        )}   
+                    </div>  
                     <div>
                         {(this.state.victory != null) && this.state.victory}
                     </div>  

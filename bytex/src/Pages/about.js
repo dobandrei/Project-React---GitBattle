@@ -2,11 +2,11 @@ import React from 'react';
 
 function About() {
   return (
-    <div>
+    <div className='about'>
       <h1>About</h1>
-      <section>
+      <article>
         <p>
-          GitBattle is a React App that pulls data from the Github API to achieve multiple actions on Github users.
+          GitBattle is a React App that pulls data from the Github API to achieve different actions on Github users.
         </p>
         <p>
           There are multiple types of battles you can do with 2 or more GitHub users.
@@ -28,7 +28,7 @@ function About() {
             Who updated their account last?
           </li>
         </ul>
-      </section>
+      </article>
       
     </div>
   );

@@ -5,7 +5,7 @@ class OldesAccountBattle extends Component {
         super(props)
         this.state = {
           victory: null,
-          avatar : '',
+          avatar : [],
           name : ''
         }
     }
@@ -41,7 +41,7 @@ class OldesAccountBattle extends Component {
         }
         let oldestDate = new Date();
         let result = '';
-        let photo = '';
+        let photo = [];
         this.props.data.forEach( user => { 
           let userName = `"${user.login.toLowerCase()}"`;
           let userCreateDate = new Date(user.created_at);
@@ -50,7 +50,7 @@ class OldesAccountBattle extends Component {
                 let day = oldestDate.getDate();
                 let dayDate = (day in days) ? days[day]:(`${day}th`);
                 result =  `The winner is: ${userName}, he created his account on the ${dayDate} of ${months[oldestDate.getMonth()]} ${oldestDate.getFullYear()}.`
-                photo = user.avatar_url;
+                photo = [user.avatar_url];
               }
           })       
           this.setState({
@@ -66,7 +66,11 @@ class OldesAccountBattle extends Component {
             <span>Who has the oldest account ? 
             </span>
                 <div className ='winner'>
-                        <img src={this.state.avatar} alt={this.state.name}/>
+                    <div>
+                      {this.state.avatar.map((photoLink, index) => 
+                        <img src = {photoLink} alt='userPhoto' key = {index}/>
+                        )}   
+                    </div> 
                     <div>
                         {(this.state.victory != null) && this.state.victory}
                     </div>  

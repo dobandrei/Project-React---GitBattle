@@ -55,11 +55,11 @@ class AddRemoveUser extends Component {
   sendData = () => this.props.parentCallBack(this.state.gitUsers)
 
   render() {
-    console.log('addUser',this.state.gitUsers.length)
+   
     return (
     <div className = 'containerAddRemove'>
         <div className = 'addUser'> 
-            <p>Introduce the GitHub users to be compared:</p>
+            <p>Add GitHub users to be compared:</p>
             <input 
               type = "text"
               placeholder = "  Add user"
@@ -72,7 +72,7 @@ class AddRemoveUser extends Component {
             </button>
         </div>
 
-        <div className='battle'>
+        <div className='containerBattle'>
           <LocationBattle data = {this.props.data}/>
           <RepoBattle data = {this.props.data}/>
           <FollowersBattle data = {this.props.data}/>

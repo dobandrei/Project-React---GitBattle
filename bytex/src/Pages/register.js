@@ -1,18 +1,31 @@
 import React, { Component } from 'react';
 import './register.css'
 
-
 const initialState = {
   username: '',
+  usernameErrorMessage: '',
+  usernameError: false,
+  usernameSuccess: false,
+
+  gitUser: '',
+  gitUserErrorMessage: '',
+  gitUserError: false,
+  gitUserSuccess: false,
+
   email: '',
+  emailErrorMessage: '',
+  emailError: false,
+  emailSuccess: false,
+
   password: '',
+  passwordErrorMessage: '',
+  passwordError: false,
+  passwordSuccess: false,
+
   pass2: '',
-  usernameError: '',
-  emailError: '',
-  passwordError: '',
-  pass2Error: '',
-  error: false,
-  success: false
+  pass2ErrorMessage: '',
+  pass2Error: false,
+  pass2Success: false
 }
 
 class Register extends Component {
@@ -27,81 +40,78 @@ class Register extends Component {
       [name]: value
     })
   }
-  showError = (message) => {
-    this.setState({error : true});
-    return message;
-    };
-    
-   showSucces = () => {
-    this.setState({success : true});
-  };
-
-  checkLength = (value, min = 6, max) => {
-    
-    if (value.trim().length < min) {
-      return this.showError(`${value.name} must have at least ${min} characters`);
-    } else if (value.trim().length >= max){
-      return this.showError(`${value.name} must have max ${max} characters`);
+  
+  checkLength = (inputValue, min, max) => {
+    if (inputValue.trim().length < min) {
+      
+      return `Must type at least ${min} characters`;
+    } else if (inputValue.trim().length > max){
+     
+      return `Must type max ${max} characters`;
     } else {
-      this.setState({error : false});
-      return this.showSucces();
+      
+      return '';
     }
 }
-  validate = () => {
-      let usernameError = '';
-      let emailError = '';
-      let passwordError = '';
-      let pass2Error = '';
 
-      //const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-      if (!this.state.username) {
-        usernameError = 'Field requiered';
+  checkEmail = email => {
+    const regexConditions = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    if (!regexConditions.test(String(email).toLowerCase())) {
+          return 'Email is not valid';
+    }
+  };
+
+  checkPasswordsMatch = (password1, password2) => {
+    if (password1 !== password2) {
+        return `Passwords do not match!`;
+    };
+  }
+
+  validate = (input,message) => {
+      let errorMessage = '';
+
+       if (!this.state[`${input}`]) {
+        errorMessage = 'Field requiered';
       } else {
-        usernameError = this.checkLength(this.state.username,7,15)
+        errorMessage = message;
       }
-
-      if (!this.state.email) {
-        emailError = `Field requiered`;
-      }
-
-      if (!this.state.password) {
-        passwordError = `Field requiered`;
-      }
-
-      if (!this.state.pass2) {
-        pass2Error = `Field requiered`;
-      }
-
-      if (usernameError || emailError || passwordError || pass2Error) {
-        this.setState({usernameError,emailError,passwordError, pass2Error,error: true})
+      if (errorMessage ) {
+        this.setState({[`${input}ErrorMessage`]: errorMessage, [`${input}Error`]: true, [`${input}Success`]: false})
         return false;
-      }
+      } else {
+      this.setState({[`${input}ErrorMessage`]: errorMessage,[`${input}Success`]: true, [`${input}Error`]: false})
       return true;
+     }
   }
 
   handdleSubmit = (event) => {
+    
     event.preventDefault();
-    const isValid = this.validate();
-    if (isValid) {
+    
+    const isUsernameValid = this.validate('username',this.checkLength(this.state.username,8,15));
+    const isGitUserValid = this.validate('gitUser',this.checkLength(this.state.gitUser,1,15));
+    const isEmailValid = this.validate('email',this.checkEmail(this.state.email));
+    const isPasswordValid = this.validate('password',this.checkLength(this.state.password,6,10));
+    const isPass2SameWithPass1 = this.validate('pass2',this.checkPasswordsMatch(this.state.password,this.state.pass2));
+
+    if (isUsernameValid && isEmailValid && isPasswordValid && isPass2SameWithPass1) {
       this.setState(initialState);
     }
   }
   
   render(){
     return (
-      <div 
-        className = {(this.state.error) && 'error'}
-        id="containerRegister">
-{console.log(this.state)}
+      <div id="containerRegister">
+      
         <form id="form"
           onSubmit={this.handdleSubmit}>
             <h2>Register</h2>
 
             <div 
             id ="formInput" 
-            className = {(this.state.error) ? 'error' : (this.state.success) && 'success'}
-            >
+            className = {this.state.usernameError ? 'error': this.state.usernameSuccess ? 'success' : undefined}>
                 <label> Username</label>
+                
                 <input 
                    name ="username" 
                   type="text" 
@@ -109,13 +119,29 @@ class Register extends Component {
                   onChange = {this.handdleChange}
                   value = {this.state.username}/>
                 <small >
-                  {this.state.usernameError}
+                  {this.state.usernameErrorMessage}
                 </small>
-            </div>
+                </div>
+
+                <div 
+            id ="formInput" 
+            className = {this.state.gitUserError ? 'error': this.state.gitUserSuccess ? 'success' : undefined}>
+                <label> GitHub username</label>
+                
+                <input 
+                   name ="gitUser" 
+                  type="text" 
+                  placeholder="  Enter GitHub username "
+                  onChange = {this.handdleChange}
+                  value = {this.state.gitUser}/>
+                <small >
+                  {this.state.gitUserErrorMessage}
+                </small>
+                </div>
 
             <div 
             id ="formInput" 
-            className = {(this.state.error) ? 'error' : (this.state.success) && 'success'}
+            className = {this.state.emailError ? 'error' : (this.state.emailSuccess) ? 'success' : undefined}
             >
                 <label>Email</label>
                 <input 
@@ -126,13 +152,13 @@ class Register extends Component {
                   onChange = {this.handdleChange}
                   value = {this.state.email}/>
                 <small >
-                  {this.state.emailError}
+                  {this.state.emailErrorMessage}
                 </small>
             </div>
 
             <div 
             id ="formInput" 
-            className = {(this.state.error) ? 'error' : (this.state.success) && 'success'}
+            className = {this.state.passwordError ? 'error' : (this.state.passwordSuccess) ? 'success' : undefined}
             >
                 <label>Password</label>
                 <input 
@@ -143,13 +169,13 @@ class Register extends Component {
                   onChange = {this.handdleChange}
                   value = {this.state.password}/>
                 <small >
-                  {this.state.passwordError}
+                  {this.state.passwordErrorMessage}
                 </small>
             </div>
 
             <div 
             id ="formInput" 
-            className = {(this.state.error) ? 'error' : (this.state.success) && 'success'}
+            className = {this.state.pass2Error ? 'error' : (this.state.pass2Success) ? 'success' : undefined}
             >
                 <label>Confirm Password</label>
                 <input 
@@ -160,7 +186,7 @@ class Register extends Component {
                   onChange = {this.handdleChange}
                   value = {this.state.pass2}/>
                 <small>
-                  {this.state.pass2Error}
+                  {this.state.pass2ErrorMessage}
                 </small>
             </div>
 

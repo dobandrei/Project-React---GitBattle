@@ -9,7 +9,6 @@ import Header from '../Components/header'
 import Footer from '../Components/footer'
 import Home from '../Pages/home'
 import About from '../Pages/about'
-import LogIn from '../Pages/logIn'
 import Register from '../Pages/register'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHome } from '@fortawesome/free-solid-svg-icons'
@@ -34,24 +33,26 @@ class Layout extends Component {
                 <Router>
                     <div className = 'routerContent'>
                         <Link to='/'>
-                            <FontAwesomeIcon icon={faHome} color='black'/>
-                            <span>Home</span>
+                            <div>
+                                <FontAwesomeIcon icon={faHome} color='black'/>
+                                <span>Home</span>
+                            </div>
                         </Link>
 
                         <Link to='/about'>
-                            <FontAwesomeIcon icon={faEye} color='black'/>
-                            <span>About</span>
+                            <div>
+                                <FontAwesomeIcon icon={faEye} color='black'/>
+                                <span>About</span>
+                            </div>
                         </Link>
 
                         <Link to='/register'>
-                            <FontAwesomeIcon icon={faRegistered} color='black'/>
-                            <span>Register</span>
+                            <div>
+                                <FontAwesomeIcon icon={faRegistered} color='black'/>
+                                <span>Register</span>
+                                </div>
                         </Link>
 
-                        <Link to='/logIn'>
-                            <FontAwesomeIcon icon={faFeather} color='black'/>
-                            <span>Log in</span>
-                        </Link>
                     </div>
                     
                     <div className='mainContent'>
@@ -61,9 +62,6 @@ class Layout extends Component {
                             </Route>
                             <Route path='/about'>
                                 <About />
-                            </Route>
-                            <Route path='/logIn'>
-                                <LogIn />
                             </Route>
                             <Route path='/register'>
                                 <Register />

@@ -27,7 +27,7 @@ class Home extends Component {
   }
 
   render() {
-    console.log('home',this.state.gitUsers.length)
+    
     return (
       <div className = 'home'>
           <AddRemoveUser data = {this.state.gitUsers} parentCallBack = {this.callBackFunction}/>
