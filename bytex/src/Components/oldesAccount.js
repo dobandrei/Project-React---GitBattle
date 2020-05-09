@@ -56,7 +56,7 @@ class OldesAccountBattle extends Component {
           this.setState({
             victory: result,
             name: result,
-            avatar: photo != null && photo,
+            avatar: photo,
           })
     } 
     render(){

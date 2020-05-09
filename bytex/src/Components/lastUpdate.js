@@ -60,7 +60,7 @@ class LastUpdateBattle extends Component {
                 this.setState({
                     victory: `The winner is: ${result}, last updated on the ${fullDate} ${fullTime}.`,
                     name: result,
-                    avatar: photo != null && photo,
+                    avatar: photo
                 })    
     } 
     render(){

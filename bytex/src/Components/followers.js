@@ -35,11 +35,15 @@ class FollowersBattle extends Component {
             }
         })
 
-            if(maxFollowers == 0){
-              result = 'Nobody won, all GitHub users have 0 followers!';
-            }
+        if (maxFollowers == 0) {
+          result = 'Nobody won, all GitHub users have 0 followers!'; 
+          photo = []; 
+        } else {
+          result = `Victory for: ${result} with ${maxFollowers} followers.`
+        }  
+            
           this.setState({
-            victory: `Victory for: ${result} with ${maxFollowers} reporitories.`,
+            victory: result,
             name: result,
             avatar: photo
           })

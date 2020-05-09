@@ -9,7 +9,7 @@ function About() {
           GitBattle is a React App that pulls data from the Github API to achieve multiple actions on Github users.
         </p>
         <p>
-          There are multiple types if battle you can do with 2 or more GitHub users.
+          There are multiple types of battles you can do with 2 or more GitHub users.
         </p>
         <ul>
           <li>

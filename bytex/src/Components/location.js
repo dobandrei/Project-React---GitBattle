@@ -8,8 +8,9 @@ class LocationBattle extends Component {
             victory : null,
             lat : 0,
             lon : 0,
-            avatar : '',
-            name : ''
+            avatar : [],
+            name : '',
+            loading: false
         }
     }
     
@@ -39,15 +40,21 @@ class LocationBattle extends Component {
     }
 
     handdleClick= () =>{
+        if(this.props.data.length <= 1){
+            return this.setState({
+                 victory: 'Please add at least 2 GitHub users to compare them!'
+             })
+         } 
         let minimDistance = 0;
         let result =''; 
-        
-
+        this.setState({loading:true})
+        let photo = [];
         this.props.data.forEach(user => {
             if (user.location != null) {
                 let userLocation = user.location.includes(',') ? user.location.slice(0,user.location.indexOf(',')) : user.location;
                 let userName = `"${user.login.toLowerCase()}"`;
-                let photo = user.avatar_url;
+                
+                
                 fetch(`https://api.opencagedata.com/geocode/v1/json?q=${userLocation}&key=${this.state.key}`)
                 .then (res => res.json())
                 .then (data => {
@@ -59,19 +66,19 @@ class LocationBattle extends Component {
                                         lat2: coord.lat,
                                         lon2: coord.lng
                                     });
+                    
                     if (userDistance < minimDistance || minimDistance == 0) {
                         minimDistance = userDistance;
                         result = userName;
-                        photo = user.avatar_url;
+                        photo = [user.avatar_url];
                     }
-                    if (userDistance == minimDistance) {
-                        result = userName;
-                        photo = user.avatar_url;
-                    }
+
+                    
                     this.setState({
                         victory: `The GitHub user ${result} is the closest to you, at ${minimDistance} km distance.`,
                         name: result,
-                        avatar: photo != null && photo,
+                        avatar: photo,
+                        loading: false
                     })
                 })
                 .catch(err => console.log(err))         
@@ -79,17 +86,22 @@ class LocationBattle extends Component {
         })
     }
     render(){
-        
-        return (
-            <div className='winnerContainer'>
-                <button className = 'buttonBattle' onClick = {this.handdleClick}>Battle</button>
-                <span>Which GitHub user is closer to you ? </span>
+        const displayWinner = this.state.loading ? "Loading ..." : 
                 <div className ='winner'>
-                        <img src={this.state.avatar} alt={this.state.name}/>
+                    <div>
+                      {this.state.avatar.map((photoLink, index) => 
+                        <img src = {photoLink} alt='userPhoto' key = {index}/>
+                        )}   
+                    </div>  
                     <div>
                         {(this.state.victory != null) && this.state.victory}
                     </div>  
                 </div>
+        return (
+            <div className='winnerContainer'>
+                <button className = 'buttonBattle' onClick = {this.handdleClick}>Battle</button>
+                <span>Which GitHub user is closer to you ? </span>
+                {displayWinner}    
             </div>
         )
     }

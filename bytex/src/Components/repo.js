@@ -37,32 +37,34 @@ class RepoBattle extends Component {
             }
         })
 
-            if(maxRepo == 0){
-              result = 'Nobody won, all GitHub users have 0 repositories!';
-            }
+        if (maxRepo == 0) {
+          result = 'Nobody won, all GitHub users have 0 repositories!'; 
+          photo = []; 
+        } else {
+          result = `Victory for: ${result} with ${maxRepo} repositories.`
+        }  
             
           this.setState({
-            victory: `Victory for: ${result} with ${maxRepo} reporitories.`,
+            victory: result,
             name: result,
-            avatar: photo
+            avatar: photo      
           })
     } 
-    render(){
-      console.log('repo',this.props.data.length)
+    render(){      
       return (
         <div className='winnerContainer'>
           <button className = 'buttonBattle' onClick = {this.handdleClick}>Battle</button> 
             <span>Who has more public repositories ?</span>
             <div className ='winner'>
-                    <div className='winnerImg'>
-                      {this.state.avatar.map((user, index) => 
-                        <img src = {user} alt='userPhoto' key = {index}/>
-                        )}   
-                    </div>  
-                    <div>
-                        {(this.state.victory != null) && this.state.victory}
-                    </div>  
-                </div>
+            <div>
+              {this.state.avatar.map((user, index) => 
+                <img src = {user} alt='userPhoto' key = {index}/>
+                )}   
+            </div>  
+            <div>
+                {(this.state.victory != null) && this.state.victory}
+            </div>  
+        </div>
         </div>
       );
     }
