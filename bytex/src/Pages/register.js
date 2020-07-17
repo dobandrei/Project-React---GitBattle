@@ -94,7 +94,7 @@ class Register extends Component {
     const isPasswordValid = this.validate('password',this.checkLength(this.state.password,6,10));
     const isPass2SameWithPass1 = this.validate('pass2',this.checkPasswordsMatch(this.state.password,this.state.pass2));
 
-    if (isUsernameValid && isEmailValid && isPasswordValid && isPass2SameWithPass1) {
+    if (isUsernameValid && isGitUserValid && isEmailValid && isPasswordValid && isPass2SameWithPass1) {
       this.setState(initialState);
     }
   }

@@ -11,9 +11,9 @@ function Footer() {
             </div>
 
             <div>
-                <a href="#"><img src={logoF} width="30px" heigt="30px"/></a>
-                <a href="#"><img src={logoT} width="30px" heigt="30px"/></a>
-                <a href="#"><img src={logoL} width="30px" heigt="30px"/></a>
+                <a href="https://www.facebook.com/" target="_blank"><img src={logoF} width="30px" heigt="30px"/></a>
+                <a href="https://twitter.com" target="_blank"><img src={logoT} width="30px" heigt="30px"/></a>
+                <a href="https://linkedin.com/" target="_blank"><img src={logoL} width="30px" heigt="30px"/></a>
             </div>
     </div>
   );
